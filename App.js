@@ -16,11 +16,10 @@ const styles = StyleSheet.create({
 export default class App extends React.Component {
   componentWillMount() {
     const web3 = new Web3(
-      new Web3.providers.HttpProvider('https://mainnet.infura.io/')
+      new Web3.providers.HttpProvider('https://mainnet.infura.io/'),
     );
 
-    web3.eth.getBlock('latest').then(console.log)
-    console.log(web3.eth)
+    web3.eth.getBlock('latest').then(console.log);
   }
 
   render() {
