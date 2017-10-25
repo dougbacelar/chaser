@@ -1,15 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import './global';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Hello World!!</Text>
-      </View>
-    );
-  }
-}
+const Web3 = require('web3');
 
 const styles = StyleSheet.create({
   container: {
@@ -19,3 +12,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default class App extends React.Component {
+  componentWillMount() {
+    const web3 = new Web3(
+      new Web3.providers.HttpProvider('https://mainnet.infura.io/')
+    );
+
+    web3.eth.getBlock('latest').then(console.log)
+    console.log(web3.eth)
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Hello World!!</Text>
+      </View>
+    );
+  }
+}
