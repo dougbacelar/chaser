@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Header } from 'react-native-elements';
 import '../../global';
 import ConnectedHome from '../screens/home';
+import AddAddressButton from '../screens/home/AddAddressButton';
 import { APP_NAME } from '../constants';
 
 const styles = StyleSheet.create({
@@ -20,7 +21,7 @@ export const AppRoot = () => (
     <Header
       backgroundColor="blue"
       centerComponent={{ text: APP_NAME, style: { color: '#fff' } }}
-      rightComponent={{ icon: 'add', color: '#fff' }}
+      rightComponent={<AddAddressButton />}
     />
     <Text>App Root!!</Text>
     <ConnectedHome />
