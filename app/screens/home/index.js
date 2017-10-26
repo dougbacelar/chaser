@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
-import ConnectedAddressList from '../components/AddressList';
+import ConnectedAddressList from '../../components/AddressList';
 
 async function test() {
   const myAddresses = {
@@ -38,5 +38,4 @@ export class Home extends React.Component {
     );
   }
 }
-
 export default connect(null, null)(Home);
