@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#fff",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <Header
+    backgroundColor="blue"
+    centerComponent={
+      Object {
+        "style": Object {
+          "color": "#fff",
+        },
+        "text": "Cryptofolio",
+      }
+    }
+    rightComponent={
+      Object {
+        "color": "#fff",
+        "icon": "add",
+      }
+    }
+  />
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    disabled={false}
+    ellipsizeMode="tail"
+  >
+    App Root!!
+  </Text>
+  <Connect(Home) />
+</View>
+`;

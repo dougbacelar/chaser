@@ -1,8 +1,13 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import AppRoot from '../AppRoot';
+import { shallow, configure } from 'enzyme';
+import toJson from 'enzyme-to-json';
+import Adapter from 'enzyme-adapter-react-16';
+import { AppRoot } from '../AppRoot';
+
+configure({ adapter: new Adapter() });
 
 it('renders without crashing', () => {
-  const rendered = renderer.create(<AppRoot />).toJSON();
-  expect(rendered).toBeTruthy();
+  const component = shallow(<AppRoot />);
+
+  expect(toJson(component)).toMatchSnapshot();
 });
