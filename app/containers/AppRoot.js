@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import '../../global';
-import AddressList from '../components/AddressList';
+import ConnectedAddressList from '../components/AddressList';
 
 const Web3 = require('web3');
 
@@ -43,7 +43,7 @@ export class AppRoot extends React.Component {
     return (
       <View style={styles.container}>
         <Text>Hello World!!</Text>
-        <AddressList />
+        <ConnectedAddressList />
       </View>
     );
   }
