@@ -1,17 +1,21 @@
 {
-    "env": {
-      "jest": true
-    },
-    "extends": [
-      "airbnb"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error",
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-      "function-paren-newline": ["error", "consistent"],
-      "arrow-parens": ["error", "as-needed"]
-    }
+  "env": {
+    "jest": true
+  },
+  "extends": ["airbnb"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "function-paren-newline": ["error", "consistent"],
+    "arrow-parens": ["error", "as-needed"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "never"
+      }
+    ]
+  }
 }
