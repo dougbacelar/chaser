@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "AsyncStorage": "^0.1.5",
+    "buffer": "^5.0.8",
     "crypto-browserify": "^3.11.1",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
@@ -42,6 +43,7 @@
     "react-native": "^0.48.4",
     "react-native-elements": "^0.17.0",
     "react-native-vector-icons": "^4.4.2",
+    "react-navigation": "^1.0.0-beta.15",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "web3": "^1.0.0-beta.24"
