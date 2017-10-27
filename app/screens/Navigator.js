@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
-import HomeScreen from './home';
+import HomeScreen from './Home';
+import AddAddressScreen from './AddAddress';
 import { APP_NAME, ADD_ADDRESS_TITLE } from '../constants';
-import AddAddressButton from './home/AddAddressButton';
+import AddAddressButton from './Home/AddAddressButton';
 
-const DetailsScreen = () => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Details Screen</Text>
-  </View>
-);
-
-const homeNavigationOptions = ({ navigation }) => {
+const homeNavOptions = ({ navigation }) => {
   const { navigate } = navigation;
   return {
     headerTitle: APP_NAME,
@@ -25,16 +19,18 @@ const homeNavigationOptions = ({ navigation }) => {
   };
 };
 
+const addAddressNavOptions = () => ({
+  headerTitle: ADD_ADDRESS_TITLE,
+});
+
 export const AppNavigator = StackNavigator({
   Home: {
     screen: HomeScreen,
-    navigationOptions: homeNavigationOptions,
+    navigationOptions: homeNavOptions,
   },
   AddAddress: {
-    screen: DetailsScreen,
-    navigationOptions: {
-      headerTitle: ADD_ADDRESS_TITLE,
-    },
+    screen: AddAddressScreen,
+    navigationOptions: addAddressNavOptions,
   },
 });
 
