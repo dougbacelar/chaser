@@ -1,7 +1,12 @@
 import { FETCH_ADDRESSES_SUCCESS } from '../constants/addressesActions';
 
 const initialState = {
-  addresses: ['lala'],
+  addresses: [
+    {
+      alias: 'lala',
+      hash: '0x389479138',
+    },
+  ],
 };
 
 export default function(state = initialState, action) {
