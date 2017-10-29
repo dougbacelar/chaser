@@ -29,8 +29,7 @@ const AddAddressForm = () => (
       style={styles.container}
       textStyle={{}}
       backdropStyle={{ backgroundColor: '#d3d5d6' }}
-      optionListStyle={{ backgroundColor: '#F5FCFF' }}
-    >
+      optionListStyle={{ backgroundColor: '#F5FCFF' }}>
       <Option value={{ name: 'eth' }}>Ethereum</Option>
       <Option value="btc">Bitcoin</Option>
     </Select>

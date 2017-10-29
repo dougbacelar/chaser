@@ -9,6 +9,7 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "function-paren-newline": ["error", "consistent"],
     "arrow-parens": ["error", "as-needed"],
+    "react/jsx-closing-bracket-location": "off",
     "space-before-function-paren": [
       "error",
       {
