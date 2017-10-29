@@ -5,6 +5,7 @@ import {
   FormLabel,
   FormInput,
   FormValidationMessage,
+  Button,
 } from 'react-native-elements';
 
 import { Select, Option } from 'react-native-chooser';
@@ -48,6 +49,8 @@ const AddAddressForm = () => (
     <FormValidationMessage style={{ display: 'none' }}>
       Error message
     </FormValidationMessage>
+
+    <Button title="Submit" style={{ marginTop: 20 }} backgroundColor="blue" />
   </View>
 );
 // onChangeText={someFunction}
