@@ -4,7 +4,7 @@ import navReducer from './navigator';
 
 const rootReducer = combineReducers({
   nav: navReducer,
-  eth: addresses,
+  addresses,
 });
 
 export default rootReducer;

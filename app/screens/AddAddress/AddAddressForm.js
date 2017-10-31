@@ -22,38 +22,85 @@ const styles = StyleSheet.create({
   },
 });
 
-const AddAddressForm = () => (
-  <View>
-    <FormLabel>Currency</FormLabel>
-    <Select
-      defaultText="Select a cryptocurrency"
-      style={styles.container}
-      textStyle={{}}
-      backdropStyle={{ backgroundColor: '#d3d5d6' }}
-      optionListStyle={{ backgroundColor: '#F5FCFF' }}>
-      <Option value={{ name: 'eth' }}>Ethereum</Option>
-      <Option value="btc">Bitcoin</Option>
-    </Select>
-    <FormValidationMessage style={{ display: 'none' }}>
-      You must select a currency
-    </FormValidationMessage>
+export class AddAddressForm extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log(`props: ${props.handleSaveAddress}`);
+    this.state = {
+      alias: '',
+      hash: '',
+      currencyId: '',
+    };
 
-    <FormLabel>Address Alias(optional)</FormLabel>
-    <FormInput placeholder="Main wallet" />
-    <FormValidationMessage style={{ display: 'none' }}>
-      Error message
-    </FormValidationMessage>
+    this.onPress = event => {
+      console.log(`trying to save ${event}`);
+      console.log(`props: ${this.props.handleSaveAddress}`);
+      console.log(`the state is now: ${JSON.stringify(this.state)}`);
+      const { handleSaveAddress } = this.props;
 
-    <FormLabel>Address</FormLabel>
-    <FormInput placeholder="0x8305...f4854" />
-    <FormValidationMessage style={{ display: 'none' }}>
-      Error message
-    </FormValidationMessage>
+      handleSaveAddress(this.state);
+    };
 
-    <Button title="Submit" style={{ marginTop: 20 }} backgroundColor="blue" />
-  </View>
-);
+    this.onChange = event => {
+      console.log(event);
+      console.log(this.state);
+      console.log(`values have changed! ${event}`);
+    };
+    this.onSelect = (currencyId, label) => {
+      console.log(currencyId);
+      this.setState({ currencyId });
+    };
+  }
+
+  render() {
+    return (
+      <View>
+        <FormLabel>Currency</FormLabel>
+        <Select
+          defaultText="Select a cryptocurrency"
+          style={styles.container}
+          textStyle={{}}
+          backdropStyle={{ backgroundColor: '#d3d5d6' }}
+          optionListStyle={{ backgroundColor: '#F5FCFF' }}
+          onSelect={this.onSelect.bind(this)}>
+          <Option value="eth">Ethereum</Option>
+          <Option value="btc">Bitcoin</Option>
+        </Select>
+        <FormValidationMessage style={{ display: 'none' }}>
+          You must select a currency
+        </FormValidationMessage>
+
+        <FormLabel>Address Alias(optional)</FormLabel>
+        <FormInput
+          placeholder="Main wallet"
+          onChangeText={alias => this.setState({ alias })}
+        />
+        <FormValidationMessage style={{ display: 'none' }}>
+          Error message
+        </FormValidationMessage>
+
+        <FormLabel>Address</FormLabel>
+        <FormInput
+          placeholder="0x8305...f4854"
+          onChangeText={hash => this.setState({ hash })}
+        />
+        <FormValidationMessage style={{ display: 'none' }}>
+          Error message
+        </FormValidationMessage>
+
+        <Button
+          title="Submit"
+          style={{ marginTop: 20 }}
+          backgroundColor="blue"
+          onPress={() => this.onPress()}
+        />
+      </View>
+    );
+  }
+}
 // onChangeText={someFunction}
-PropTypes.AddAddressForm = {};
+PropTypes.AddAddressForm = {
+  handleSaveAddress: PropTypes.func.isRequired,
+};
 
 export default AddAddressForm;

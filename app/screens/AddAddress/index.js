@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import '../../../global';
 import AddAddressForm from './AddAddressForm';
+import { saveAddress } from '../../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,19 +14,26 @@ const styles = StyleSheet.create({
 
 export class AddAddress extends React.Component {
   render() {
-    const { navigate } = this.props.navigation;
+    const { navigation, handleSaveAddress } = this.props;
     return (
       <View style={styles.container}>
-        <AddAddressForm />
+        <AddAddressForm handleSaveAddress={handleSaveAddress} />
       </View>
     );
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  handleSaveAddress: address => {
+    dispatch(saveAddress(address));
+  },
+});
+
 AddAddress.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
   }).isRequired,
+  handleSaveAddress: PropTypes.func.isRequired,
 };
 
-export default connect(null, null)(AddAddress);
+export default connect(null, mapDispatchToProps)(AddAddress);
