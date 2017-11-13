@@ -2,45 +2,58 @@ import { AsyncStorage } from 'react-native';
 
 class Storage {
   static async saveAddress(newAddress) {
-    // response = await AsyncStorage.getItem('addresses');
+    console.log('==========trying to save==========');
+    console.log(`new address is: ${JSON.stringify(newAddress)}`);
+    const currentAddresses = await this.fetchAddresses();
 
-    this.fetchAddresses()
-      .then(response => {
-        console.log(`new address is: ${JSON.stringify(newAddress)}`);
-        console.log(`current addresses ${response}`);
-        const addresses = JSON.parse(response);
+    if (!this.isUniqueAddress(newAddress, currentAddresses)) {
+      throw Error('address is not unique!');
+    }
 
-        if (this.isUniqueAddress(newAddress, addresses)) {
-          console.log('address is unique');
+    if (!this.isValidAddress(newAddress)) {
+      throw Error('address is not valid!');
+    }
 
-          if (this.isValidAddress(newAddress)) {
-            const newAddressId = `${newAddress.currencyId}-${newAddress.hash}`;
+    const newAddressId = `${newAddress.currencyId}-${newAddress.hash}`;
 
-            addresses.byId[newAddressId] = {
-              id: newAddressId,
-              ...newAddress,
-            };
+    // adding newAddress to currentAddresses object before saving
+    currentAddresses.byId[newAddressId] = {
+      id: newAddressId,
+      ...newAddress,
+    };
 
-            addresses.allIds.push(newAddressId);
+    currentAddresses.allIds.push(newAddressId);
 
-            return AsyncStorage.setItem(
-              'addresses',
-              JSON.stringify(addresses),
-            ).then(() => this.fetchAddresses());
-          }
-        } else {
-          throw Error('address is not unique!');
-        }
-      })
-      .catch(err => {
-        throw Error(
-          `something went wrong while trying to save addresses ${err}`,
-        );
-      });
+    await this.overwriteAddresses(currentAddresses);
+
+    const savedAddresses = await this.fetchAddresses();
+
+    console.log(
+      `after saving, savedAddresses: ${JSON.stringify(savedAddresses)}`,
+    );
+    return savedAddresses;
   }
 
   static async fetchAddresses() {
-    return AsyncStorage.getItem('addresses');
+    try {
+      const addresses = await AsyncStorage.getItem('addresses');
+
+      console.log(`[fetchAddresses]current addresses ${addresses}`);
+      return JSON.parse(addresses);
+    } catch (err) {
+      throw Error(`Could not fetch saved addresses: ${err}`);
+    }
+  }
+
+  static async overwriteAddresses(newAddresses) {
+    try {
+      await AsyncStorage.setItem('addresses', JSON.stringify(newAddresses));
+
+      console.log('[overwriteAddresses] addresses were saved');
+      return true;
+    } catch (err) {
+      throw Error(`Could not save addresses: ${err}`);
+    }
   }
 
   static isValidAddress(newAddress) {

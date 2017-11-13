@@ -34,7 +34,7 @@ export class Home extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const { addressList } = this.props;
-    console.log(`home addresslist: ${addressList}`);
+    console.log(`home addresslist: ${JSON.stringify(addressList)}`);
     return (
       <View>
         <Text>Home, Hello World!!</Text>
@@ -59,7 +59,7 @@ Home.propTypes = {
   }).isRequired,
   addressList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       alias: PropTypes.string.isRequired,
       hash: PropTypes.string.isRequired,
       currencyId: PropTypes.string.isRequired,

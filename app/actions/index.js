@@ -14,12 +14,10 @@ export function saveAddressSuccess(addresses) {
 
 export function saveAddress(address) {
   return async dispatch => {
-    await Storage.saveAddress(address)
-      .then(addresses => {
-        console.log(`new saved addresses: ${addresses}`);
-        return dispatch(saveAddressSuccess(addresses));
-      })
-      .catch(err => console.log(`err:${err}`));
+    console.log('saveAddress action');
+    const savedAddresses = await Storage.saveAddress(address);
+    console.log(`saved addresses are: ${JSON.stringify(savedAddresses)}`);
+    dispatch(saveAddressSuccess(savedAddresses));
   };
 }
 

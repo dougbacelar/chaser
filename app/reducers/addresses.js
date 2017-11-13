@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
     case SAVE_ADDRESS_SUCCESS:
       return {
         ...state,
-        addresses: action.payload,
+        ...action.payload,
       };
     case FETCH_ADDRESSES_SUCCESS:
       return {
@@ -38,9 +38,11 @@ export default function(state = initialState, action) {
   }
 }
 
-export const getAddressList = (state, currencyId) =>
-  Object.values(state.addresses.byId).filter(
+export const getAddressList = (state, currencyId) => {
+  console.log(`[getAddressList ${currencyId}] ${JSON.stringify(state)}`);
+  return Object.values(state.addresses.byId).filter(
     address => address.currencyId === currencyId,
   );
+};
 
 export const getAddressModel = state => state.addresses;
