@@ -5,20 +5,20 @@ import {
 
 const initialState = {
   byId: {
-    1: {
-      id: 1,
+    'eth-0x389479138': {
+      id: 'eth-0x389479138',
       alias: 'lala',
       hash: '0x389479138',
       currencyId: 'eth',
     },
-    2: {
-      id: 2,
+    'btc-0x230412388': {
+      id: 'btc-0x230412388',
       alias: 'test',
       hash: '0x230412388',
       currencyId: 'btc',
     },
   },
-  allIds: [1, 2],
+  allIds: ['eth-0x389479138', 'btc-0x230412388'],
 };
 
 export default function(state = initialState, action) {

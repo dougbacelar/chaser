@@ -19,7 +19,7 @@ export const AddressList = props => {
 AddressList.propTypes = {
   addressList: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
       alias: PropTypes.string.isRequired,
       hash: PropTypes.string.isRequired,
       currencyId: PropTypes.string.isRequired,
