@@ -2,8 +2,10 @@ import {
   SAVE_ADDRESS_SUCCESS,
   FETCH_ADDRESSES_SUCCESS,
   FETCH_ADDRESSES_FAILURE,
+  FETCH_BALANCE_SUCCESS,
 } from '../constants/addressActions';
 import Storage from '../api/storage';
+import Ethereum from '../api/ethereum';
 
 export function saveAddressSuccess(addresses) {
   return {
@@ -18,6 +20,26 @@ export function saveAddress(address) {
     const savedAddresses = await Storage.saveAddress(address);
     console.log(`saved addresses are: ${JSON.stringify(savedAddresses)}`);
     dispatch(saveAddressSuccess(savedAddresses));
+  };
+}
+
+export function fetchBalanceSuccess(payload) {
+  return {
+    type: FETCH_BALANCE_SUCCESS,
+    payload,
+  };
+}
+
+export function fetchBalances(addresses) {
+  return async dispatch => {
+    console.log('fetching balances');
+    addresses.forEach(async address => {
+      if (address.currencyId === 'eth') {
+        const ethPayload = await Ethereum.fetchBalance(address);
+        console.log(`address with balance is: ${JSON.stringify(ethPayload)}`);
+        dispatch(fetchBalanceSuccess(ethPayload));
+      }
+    });
   };
 }
 

@@ -8,9 +8,11 @@ export const AddressList = props => {
   return (
     <View>
       {addressList.map(addr => (
-        <Text key={addr.hash}>
-          {addr.alias}: {addr.hash}
-        </Text>
+        <View key={addr.hash}>
+          <Text>{addr.alias}</Text>
+          <Text>{`${addr.hash.slice(0, 4)}...${addr.hash.slice(-4)}`}</Text>
+          {addr.balance && <Text>{`${addr.balance} eth`}</Text>}
+        </View>
       ))}
     </View>
   );

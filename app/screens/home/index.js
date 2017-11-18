@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import ConnectedAddressList from '../../components/AddressList';
 import '../../../global';
 import { getAddressList, getAddressModel } from '../../reducers/addresses';
+import { fetchBalances } from '../../actions';
 
 async function setInitialAddressesForTesting(myAddresses) {
   try {
@@ -14,19 +15,20 @@ async function setInitialAddressesForTesting(myAddresses) {
   }
 }
 
-const Web3 = require('web3');
+// const Web3 = require('web3');
 
 export class Home extends React.Component {
   componentWillMount() {
-    const { addressModel } = this.props;
+    const { addressModel, addressList, handleFetchBalances } = this.props;
 
     setInitialAddressesForTesting(addressModel).then(
       AsyncStorage.getItem('addresses').then(console.log),
     );
 
-    const web3 = new Web3(
-      new Web3.providers.HttpProvider('https://mainnet.infura.io/'),
-    );
+    handleFetchBalances(addressList);
+    // const web3 = new Web3(
+    //   new Web3.providers.HttpProvider('https://mainnet.infura.io/'),
+    // );
 
     // web3.eth.getBlock('latest').then(console.log);
   }
@@ -53,6 +55,12 @@ const mapStateToProps = state => ({
   addressModel: getAddressModel(state),
 });
 
+const mapDispatchToProps = dispatch => ({
+  handleFetchBalances: addresses => {
+    dispatch(fetchBalances(addresses));
+  },
+});
+
 Home.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
@@ -65,6 +73,15 @@ Home.propTypes = {
       currencyId: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  addressModel: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      alias: PropTypes.string.isRequired,
+      hash: PropTypes.string.isRequired,
+      currencyId: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  handleFetchBalances: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
