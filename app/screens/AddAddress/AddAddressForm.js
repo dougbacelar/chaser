@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, Picker } from 'react-native';
 import {
   FormLabel,
   FormInput,
   FormValidationMessage,
   Button,
 } from 'react-native-elements';
-
-import { Select, Option } from 'react-native-chooser';
 
 const { width } = Dimensions.get('window');
 
@@ -29,7 +27,7 @@ export class AddAddressForm extends React.Component {
     this.state = {
       alias: '',
       hash: '',
-      currencyId: '',
+      currencyId: 'eth',
     };
 
     this.onPress = event => {
@@ -46,7 +44,7 @@ export class AddAddressForm extends React.Component {
       console.log(this.state);
       console.log(`values have changed! ${event}`);
     };
-    this.onSelect = (currencyId, label) => {
+    this.onValueChange = currencyId => {
       console.log(currencyId);
       this.setState({ currencyId });
     };
@@ -56,16 +54,12 @@ export class AddAddressForm extends React.Component {
     return (
       <View>
         <FormLabel>Currency</FormLabel>
-        <Select
-          defaultText="Select a cryptocurrency"
-          style={styles.container}
-          textStyle={{}}
-          backdropStyle={{ backgroundColor: '#d3d5d6' }}
-          optionListStyle={{ backgroundColor: '#F5FCFF' }}
-          onSelect={this.onSelect.bind(this)}>
-          <Option value="eth">Ethereum</Option>
-          <Option value="btc">Bitcoin</Option>
-        </Select>
+        <Picker
+          selectedValue={this.state.currencyId}
+          onValueChange={this.onValueChange}>
+          <Picker.Item label="Ethereum" value="eth" />
+          <Picker.Item label="Bitcoin" value="btc" />
+        </Picker>
         <FormValidationMessage style={{ display: 'none' }}>
           You must select a currency
         </FormValidationMessage>
@@ -98,7 +92,6 @@ export class AddAddressForm extends React.Component {
     );
   }
 }
-// onChangeText={someFunction}
 PropTypes.AddAddressForm = {
   handleSaveAddress: PropTypes.func.isRequired,
 };

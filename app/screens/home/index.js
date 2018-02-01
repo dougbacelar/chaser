@@ -40,11 +40,11 @@ export class Home extends React.Component {
     return (
       <View>
         <Text>Home, Hello World!!</Text>
+        <ConnectedAddressList addressList={addressList} />
         <Button
           onPress={() => navigate('AddAddress', { name: 'Ethereum' })}
           title="Add Address"
         />
-        <ConnectedAddressList addressList={addressList} />
       </View>
     );
   }
