@@ -4,7 +4,7 @@ import {
   FETCH_ADDRESSES_FAILURE,
 } from '../constants/addressActions';
 import Storage from '../api/storage';
-import fetchBalances from './';
+import { fetchBalances } from '.';
 
 export function saveAddressSuccess(addresses) {
   return {

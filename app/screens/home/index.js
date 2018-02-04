@@ -4,12 +4,18 @@ import { Text, View, AsyncStorage, Button } from 'react-native';
 import { connect } from 'react-redux';
 import ConnectedAddressList from '../../components/AddressList';
 import '../../../global';
-import { getAddressList, getAddressModel } from '../../reducers/addresses';
+import { getAddressList } from '../../reducers/addresses';
 import { fetchBalances } from '../../actions';
+import testData from './testData.json';
 
-async function setInitialAddressesForTesting(myAddresses) {
+async function setInitialAddressesForTesting() {
   try {
-    return AsyncStorage.setItem('addresses', JSON.stringify(myAddresses));
+    const savedAddresses = await AsyncStorage.getItem('addresses');
+    if (savedAddresses != null) {
+      console.log('addresses are already saved, no need for testData');
+      return null;
+    }
+    return AsyncStorage.setItem('addresses', JSON.stringify(testData));
   } catch (err) {
     throw Error(`something went wrong ${err}`);
   }
@@ -17,11 +23,9 @@ async function setInitialAddressesForTesting(myAddresses) {
 
 export class Home extends React.Component {
   componentWillMount() {
-    const { addressModel, addressList, handleFetchBalances } = this.props;
+    const { addressList, handleFetchBalances } = this.props;
 
-    setInitialAddressesForTesting(addressModel).then(
-      AsyncStorage.getItem('addresses').then(console.log),
-    );
+    setInitialAddressesForTesting();
 
     handleFetchBalances(addressList);
   }
@@ -45,7 +49,6 @@ export class Home extends React.Component {
 
 const mapStateToProps = state => ({
   addressList: getAddressList(state, 'eth'),
-  addressModel: getAddressModel(state),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -59,14 +62,6 @@ Home.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
   addressList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      alias: PropTypes.string.isRequired,
-      hash: PropTypes.string.isRequired,
-      currencyId: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  addressModel: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       alias: PropTypes.string.isRequired,

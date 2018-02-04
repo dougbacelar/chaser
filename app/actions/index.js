@@ -1,5 +1,6 @@
 import { FETCH_BALANCE_SUCCESS } from '../constants/addressActions';
 import Ethereum from '../api/ethereum';
+import Storage from '../api/storage';
 
 export function fetchBalanceSuccess(payload) {
   return {
@@ -8,9 +9,11 @@ export function fetchBalanceSuccess(payload) {
   };
 }
 
-export function fetchBalances(addresses) {
+export function fetchBalances() {
   return async dispatch => {
-    addresses.forEach(async address => {
+    const savedAddresses = await Storage.fetchAddresses();
+
+    Object.values(savedAddresses.byId).forEach(async address => {
       if (address.currencyId === 'eth') {
         const ethPayload = await Ethereum.fetchBalance(address);
         dispatch(fetchBalanceSuccess(ethPayload));
