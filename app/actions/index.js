@@ -6,22 +6,7 @@ import {
 } from '../constants/addressActions';
 import Storage from '../api/storage';
 import Ethereum from '../api/ethereum';
-
-export function saveAddressSuccess(addresses) {
-  return {
-    type: SAVE_ADDRESS_SUCCESS,
-    payload: addresses,
-  };
-}
-
-export function saveAddress(address) {
-  return async dispatch => {
-    console.log('saveAddress action');
-    const savedAddresses = await Storage.saveAddress(address);
-    console.log(`saved addresses are: ${JSON.stringify(savedAddresses)}`);
-    dispatch(saveAddressSuccess(savedAddresses));
-  };
-}
+import { getAddressList } from '../reducers/addresses';
 
 export function fetchBalanceSuccess(payload) {
   return {
@@ -40,6 +25,29 @@ export function fetchBalances(addresses) {
         dispatch(fetchBalanceSuccess(ethPayload));
       }
     });
+  };
+}
+
+export function saveAddressSuccess(addresses) {
+  return {
+    type: SAVE_ADDRESS_SUCCESS,
+    payload: addresses,
+  };
+}
+
+export function saveAddress(address) {
+  return async dispatch => {
+    console.log('saveAddress action');
+    const savedAddresses = await Storage.saveAddress(address);
+    console.log(`saved addresses are: ${JSON.stringify(savedAddresses)}`);
+    dispatch(saveAddressSuccess(savedAddresses));
+    dispatch(
+      fetchBalances(
+        Object.values(savedAddresses.byId).filter(
+          addr => addr.currencyId === 'eth',
+        ),
+      ),
+    );
   };
 }
 

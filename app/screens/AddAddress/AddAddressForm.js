@@ -32,8 +32,7 @@ export class AddAddressForm extends React.Component {
 
     this.onPress = event => {
       console.log(`trying to save ${event}`);
-      console.log(`props: ${this.props.handleSaveAddress}`);
-      console.log(`the state is now: ${JSON.stringify(this.state)}`);
+      console.log(`address to save: ${JSON.stringify(this.state)}`);
       const { handleSaveAddress } = this.props;
 
       handleSaveAddress(this.state);
@@ -86,7 +85,7 @@ export class AddAddressForm extends React.Component {
           title="Submit"
           style={{ marginTop: 20 }}
           backgroundColor="blue"
-          onPress={() => this.onPress()}
+          onPress={this.onPress}
         />
       </View>
     );

@@ -4,7 +4,6 @@ import { Text, View } from 'react-native';
 
 export const AddressList = props => {
   const { addressList } = props;
-  console.log(`addressList props: ${JSON.stringify(props.addressList)}`);
   return (
     <View>
       {addressList.map(addr => (
