@@ -6,7 +6,6 @@ import {
 } from '../constants/addressActions';
 import Storage from '../api/storage';
 import Ethereum from '../api/ethereum';
-import { getAddressList } from '../reducers/addresses';
 
 export function fetchBalanceSuccess(payload) {
   return {
@@ -17,11 +16,9 @@ export function fetchBalanceSuccess(payload) {
 
 export function fetchBalances(addresses) {
   return async dispatch => {
-    console.log('fetching balances');
     addresses.forEach(async address => {
       if (address.currencyId === 'eth') {
         const ethPayload = await Ethereum.fetchBalance(address);
-        console.log(`address with balance is: ${JSON.stringify(ethPayload)}`);
         dispatch(fetchBalanceSuccess(ethPayload));
       }
     });
@@ -37,17 +34,8 @@ export function saveAddressSuccess(addresses) {
 
 export function saveAddress(address) {
   return async dispatch => {
-    console.log('saveAddress action');
     const savedAddresses = await Storage.saveAddress(address);
-    console.log(`saved addresses are: ${JSON.stringify(savedAddresses)}`);
-    dispatch(saveAddressSuccess(savedAddresses));
-    dispatch(
-      fetchBalances(
-        Object.values(savedAddresses.byId).filter(
-          addr => addr.currencyId === 'eth',
-        ),
-      ),
-    );
+    dispatch(fetchBalances(Object.values(savedAddresses.byId)));
   };
 }
 
