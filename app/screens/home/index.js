@@ -15,8 +15,6 @@ async function setInitialAddressesForTesting(myAddresses) {
   }
 }
 
-// const Web3 = require('web3');
-
 export class Home extends React.Component {
   componentWillMount() {
     const { addressModel, addressList, handleFetchBalances } = this.props;
@@ -26,17 +24,12 @@ export class Home extends React.Component {
     );
 
     handleFetchBalances(addressList);
-    // const web3 = new Web3(
-    //   new Web3.providers.HttpProvider('https://mainnet.infura.io/'),
-    // );
-
-    // web3.eth.getBlock('latest').then(console.log);
   }
 
   render() {
     const { navigate } = this.props.navigation;
     const { addressList } = this.props;
-    console.log(`home addresslist: ${JSON.stringify(addressList)}`);
+
     return (
       <View>
         <Text>Home, Hello World!!</Text>

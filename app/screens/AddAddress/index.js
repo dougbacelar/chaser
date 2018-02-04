@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import '../../../global';
 import AddAddressForm from './AddAddressForm';
-import { saveAddress } from '../../actions';
+import { saveAddress } from '../../actions/addresses';
 
 const styles = StyleSheet.create({
   container: {
