@@ -1,13 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import './global';
+
+const Web3 = require('web3');
+
+const web3 = new Web3(
+  new Web3.providers.HttpProvider('https://mainnet.infura.io/'),
+);
+
 export default class App extends React.Component {
   render() {
+    // printing on the console the latest ethereum block
+    web3.eth.getBlock('latest').then(console.log);
+
     return (
       <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
+        <Text>Check your console!</Text>
+        <Text>You should find info on the latest ethereum block.</Text>
       </View>
     );
   }
