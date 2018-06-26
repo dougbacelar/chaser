@@ -1,18 +1,25 @@
 import {
+  fetchAddressesFailure,
+  fetchAddressesSuccess,
+  saveAddressSuccess,
+} from '../addresses';
+
+import {
   FETCH_ADDRESSES_FAILURE,
   FETCH_ADDRESSES_SUCCESS,
   SAVE_ADDRESS_SUCCESS,
 } from '../../constants/addressActions';
 
-import { saveAddressSuccess } from '../addresses';
-
-describe('saveAddressSuccess', () => {
-  test('returns correct action', () => {
-    const payload = {};
+describe.each([
+  [FETCH_ADDRESSES_FAILURE, {}, fetchAddressesFailure],
+  [FETCH_ADDRESSES_SUCCESS, {}, fetchAddressesSuccess],
+  [SAVE_ADDRESS_SUCCESS, {}, saveAddressSuccess],
+])('synchronous action creators', (type, payload, actionCreator) => {
+  test(`returns correction action ${type}`, () => {
     const expected = {
       payload,
-      type: SAVE_ADDRESS_SUCCESS,
+      type,
     };
-    expect(saveAddressSuccess(payload)).toEqual(expected);
+    expect(actionCreator(payload)).toEqual(expected);
   });
 });
