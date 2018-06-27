@@ -4,7 +4,7 @@ import {
   FETCH_ADDRESSES_FAILURE,
 } from '../constants/addressActions';
 import Storage from '../api/storage';
-import { fetchBalances } from '.';
+import { fetchBalance } from '.';
 
 export function saveAddressSuccess(addresses) {
   return {
@@ -13,10 +13,11 @@ export function saveAddressSuccess(addresses) {
   };
 }
 
-export function saveAddress(address) {
+export function saveAddressAsync(address) {
   return async dispatch => {
     const savedAddresses = await Storage.saveAddress(address);
-    dispatch(fetchBalances(Object.values(savedAddresses.byId)));
+    //todo only fetch balance if saveAddress was successful
+    dispatch(fetchBalance(address));
   };
 }
 
