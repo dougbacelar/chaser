@@ -9,19 +9,19 @@ export function fetchBalanceSuccess(payload) {
   };
 }
 
-export function fetchBalance(address) {
-  return async dispatch => {
-    if (address.currencyId === 'eth') {
-      const ethPayload = await Ethereum.fetchBalance(address);
-      dispatch(fetchBalanceSuccess(ethPayload));
-    }
-  };
+export async function fetchBalance(dispatch, address) {
+  if (address.currencyId === 'eth') {
+    const ethPayload = await Ethereum.fetchBalance(address);
+    dispatch(fetchBalanceSuccess(ethPayload));
+  }
 }
 
 export function fetchBalances() {
   return async dispatch => {
     const savedAddresses = await Storage.fetchAddresses();
 
-    Object.values(savedAddresses.byId).forEach(async address => fetchBalance);
+    Object.values(savedAddresses.byId).forEach(async address =>
+      fetchBalance(dispatch, address),
+    );
   };
 }
